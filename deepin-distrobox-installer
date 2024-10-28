@@ -1,0 +1,54 @@
+#!/bin/bash
+
+set -Eeuo pipefail
+
+_help_message() {
+	printf "\
+Usage:
+
+	deepin-distrobox-installer <install/remove> <DISTRO>
+
+        - install: Install a Distrobox container.
+	- remove: Remove a Distrobox container.
+	- <DISTRO>: Distribution to install (this should be named after the
+          OCI image name).
+
+"
+}
+
+if [[ "$1" == "--help" || "$1" == "-h" ]]; then
+	_help_message
+	exit 0
+fi
+
+if [ -z "$1" ]; then
+	echo -e "[!!!] Please specify an action to take (install or remove?).\n"
+	_help_message
+	exit 1
+fi
+
+if [ -z "$2" ]; then
+	echo -e "[!!!] Please specify a distribution container to install.\n"
+	_help_message
+	exit 1
+fi
+
+# ubuntu:20.04 => ubuntu-20.04 => ubuntu-20-04
+_CONTAINER_NAME="${2//:/-}"
+_CONTAINER_NAME="${_CONTAINER_NAME//./-}"
+
+case "$1" in
+	install)
+		distrobox create --image "$2"
+		distrobox enter "${_CONTAINER_NAME}"
+		;;
+	remove)
+		distrobox stop "${_CONTAINER_NAME}"
+		distrobox rm "${_CONTAINER_NAME}"
+		;;
+	*)
+		echo -e "[!!!] Invalid verb specified, please choose between \`install\' and \`remove\'.\n"
+		_help_message
+		exit 1
+		;;
+esac
