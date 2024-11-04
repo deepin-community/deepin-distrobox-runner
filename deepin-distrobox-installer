@@ -39,6 +39,7 @@ _CONTAINER_NAME="${_CONTAINER_NAME//./-}"
 
 case "$1" in
 	install)
+		read -p "Distrobox requires functional Internet connection to install distribution images. Press enter to continue ..."
 		distrobox create --image "$2"
 		distrobox enter "${_CONTAINER_NAME}"
 		;;
