@@ -1,0 +1,85 @@
+#!/bin/bash
+
+set -Eeuo pipefail
+
+_help_message() {
+	printf "\
+Usage:
+
+	deepin-distrobox-runner <enter/remove> <DISTRO>
+
+	- enter: Enter a Distrobox container.
+	- remove: Remove a Distrobox container.
+	- <DISTRO>: Distribution to install (this should be named after the
+	  OCI image name).
+
+"
+}
+
+if [[ $# -ne 2 ]] ; then
+	_help_message
+	exit 0
+fi
+
+if [[ "$1" == "--help" || "$1" == "-h" ]]; then
+	_help_message
+	exit 0
+fi
+
+if [ -z "$1" ]; then
+	echo -e "[!!!] Please specify an action to take (enter or remove?).\n"
+	_help_message
+	exit 1
+fi
+
+if [ -z "$2" ]; then
+	echo -e "[!!!] Please specify a distribution container.\n"
+	_help_message
+	exit 1
+fi
+
+# ubuntu:20.04 => ubuntu-20.04 => ubuntu-20-04
+# _CONTAINER_NAME="${2//:/-}"
+# _CONTAINER_NAME="${_CONTAINER_NAME//./-}"
+_CONTAINER_NAME="$(basename "$2" | sed -E 's/[:.]/-/g')"
+
+case "$1" in
+	enter)
+		if ! podman image exists "$2" ; then
+			case "$2" in
+				archlinux:latest)
+				package="org.deepin.distrobox.archlinux.latest"
+				;;
+				debian:12)
+				package="org.deepin.distrobox.debian.bookworm"
+				;;
+				fedora:41)
+				package="org.deepin.distrobox.fedora.41"
+				;;
+				ubuntu:20.04)
+				package="org.deepin.distrobox.ubuntu.focal"
+				;;
+				*)
+				echo "[!!!] $2 is not a valid image name or not supported yet!"
+				exit 1
+			esac
+
+			if ! dpkg -s "$package" ; then
+				echo "[!!!] Please install $package from Appstore!"
+				exit 1
+			fi
+			podman load -i "/opt/apps/$package/files/"*.tar
+		fi
+		distrobox create --image "$2"
+		distrobox enter "${_CONTAINER_NAME}"
+		;;
+	remove)
+		distrobox stop "${_CONTAINER_NAME}"
+		distrobox rm "${_CONTAINER_NAME}"
+		;;
+	*)
+		echo -e "[!!!] Invalid verb specified, please choose between \`enter\' and \`remove\'.\n"
+		_help_message
+		exit 1
+		;;
+esac
