@@ -11,7 +11,7 @@ Homepage: https://deepin.com/
 Rules-Requires-Root: no
 
 Package: deepin-distrobox-runner
-Architecture: any
+Architecture: amd64
 Depends:
  desktop-file-utils,
  distrobox,
