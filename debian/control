@@ -1,13 +1,20 @@
-Source: deepin-distrobox-installer
+Source: deepin-distrobox-runner
 Section: admin
 Priority: optional
-Maintainer: Mingcong Bai <baimingcong@uniontech.com>
-Build-Depends: debhelper-compat (= 13)
+Maintainer:
+ Mingcong Bai <baimingcong@uniontech.com>,
+ Tianyu Chen <sweetyfish@deepin.org>,
+Build-Depends:
+ debhelper-compat (= 13),
 Standards-Version: 4.6.0
 Homepage: https://deepin.com/
 Rules-Requires-Root: no
 
-Package: deepin-distrobox-installer
+Package: deepin-distrobox-runner
 Architecture: any
-Depends: distrobox, desktop-file-utils
-Description: Distrobox installation helper for deepin.
+Depends:
+ desktop-file-utils,
+ distrobox,
+ podman,
+ ${misc:Depends},
+Description: Distrobox runner for deepin.

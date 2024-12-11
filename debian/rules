@@ -7,7 +7,7 @@ export DH_VERBOSE = 1
 	dh $@
 
 override_dh_auto_install:
-	install -Dvm755 ./deepin-distrobox-installer \
-		./debian/deepin-distrobox-installer/usr/libexec/deepin-distrobox-installer/deepin-distrobox-installer
+	install -Dvm755 ./deepin-distrobox-runner \
+		./debian/deepin-distrobox-runner/usr/libexec/deepin-distrobox-runner/deepin-distrobox-runner
 	install -Dvm644 ./distro-icons/* \
-		-t ./debian/deepin-distrobox-installer/usr/share/pixmaps/
+		-t ./debian/deepin-distrobox-runner/usr/share/pixmaps/
