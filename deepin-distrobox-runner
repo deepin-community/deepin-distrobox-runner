@@ -70,7 +70,7 @@ case "$1" in
 			fi
 			podman load -i "/opt/apps/$package/files/"*.tar
 		fi
-		distrobox create --image "$2"
+		distrobox create --no-entry --image "$2"
 		distrobox enter "${_CONTAINER_NAME}"
 		;;
 	remove)
