@@ -1,3 +1,9 @@
+deepin-distrobox-runner (0.0.4) unstable; urgency=medium
+
+  * Add debian_chroot, display the current distribution.
+
+ -- xiangzelong <xiangzelong@deepin.org>  Wed, 19 Feb 2025 10:53:06 +0800
+
 deepin-distrobox-runner (0.0.3) unstable; urgency=medium
 
   * Do not create desktop entry.

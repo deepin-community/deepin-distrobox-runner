@@ -71,7 +71,7 @@ case "$1" in
 			podman load -i "/opt/apps/$package/files/"*.tar
 		fi
 		distrobox create --no-entry --image "$2"
-		distrobox enter "${_CONTAINER_NAME}"
+		debian_chroot="${_CONTAINER_NAME}" distrobox enter "${_CONTAINER_NAME}"
 		;;
 	remove)
 		distrobox stop "${_CONTAINER_NAME}"
