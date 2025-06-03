@@ -1,3 +1,9 @@
+deepin-distrobox-runner (0.0.5) unstable; urgency=medium
+
+  * Add ubuntu24.04 fedora42 support.
+
+ -- xiangzelong <xiangzelong@deepin.org>  Tue, 03 Jun 2025 15:08:58 +0800
+
 deepin-distrobox-runner (0.0.4) unstable; urgency=medium
 
   * Add debian_chroot, display the current distribution.

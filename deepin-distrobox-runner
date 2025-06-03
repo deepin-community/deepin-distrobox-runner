@@ -56,8 +56,14 @@ case "$1" in
 				fedora:41)
 				package="org.deepin.distrobox.fedora.41"
 				;;
+				fedora:42)
+				package="org.deepin.distrobox.fedora.42"
+				;;
 				ubuntu:20.04)
 				package="org.deepin.distrobox.ubuntu.focal"
+				;;
+				ubuntu:24.04)
+				package="org.deepin.distrobox.ubuntu.noble"
 				;;
 				*)
 				echo "[!!!] $2 is not a valid image name or not supported yet!"
